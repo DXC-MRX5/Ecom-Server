@@ -52,8 +52,7 @@ const login = async (req, res) => {
     // Count of items in the cart
     const cartinfo = await CartModel.findOne({userId:user._id});
     const productCount = cartinfo.productIds.length
-    console.log(productCount);
-    return res.json({message:"logged in Successfully !", Token:token, userName: user.name});
+    return res.json({message:"logged in Successfully !", Token:token, userName: user.name, count:productCount});
   }
   catch (error) {
     console.error("Error during user login:", error);
