@@ -21,13 +21,31 @@ const addToCart = async (req, res)=>{
     await CartModel.updateOne({userId:req.userInfo.userId},{$set:{productIds:allproducts}})
     res.json({message:'Item sucessfully added to your cart!'})
 }
-// const deleteItem = async (req, res)=>{
-//     cartData = await CartModel.findOne({userId:req.userInfo.userId});
-//     const productsArray = cartData.productIds;
-//     const removingData = req.body
-// }
+const deleteItem = async (req, res)=>{
+    const removingData = req.body.productId
+    await CartModel.updateOne({userId:req.userInfo.userId},{$pull:{productIds:removingData}});
+    res.json({message:'Item deleted successfully !'})
+}
+// const deleteItem = async (req, res) => {
+//     const removingData = req.body.productId;
+  
+//     const result = await CartModel.updateOne(
+//       { userId: req.userInfo.userId },
+//       {
+//         $pull: { productIds: removingData },
+//         $inc: { productIdsCount: -1 }
+//       }
+//     );
+  
+//     if (result.nModified > 0) {
+//       res.json({ message: 'Item deleted successfully!' });
+//     } else {
+//       res.json({ message: 'Item not found!' });
+//     }
+//   };
 
 module.exports={
     getCartData,
-    addToCart
+    addToCart,
+    deleteItem
 }

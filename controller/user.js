@@ -49,6 +49,10 @@ const login = async (req, res) => {
     }
     // Generate a JWT token
     const token = jwt.sign({ userId: user._id, userName: user.name }, secretKey, {expiresIn: "12h"});
+    // Count of items in the cart
+    const cartinfo = await CartModel.findOne({userId:user._id});
+    const productCount = cartinfo.productIds.length
+    console.log(productCount);
     return res.json({message:"logged in Successfully !", Token:token, userName: user.name});
   }
   catch (error) {
