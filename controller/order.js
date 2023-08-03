@@ -19,7 +19,10 @@ const getFromHistory = async (req, res)=>{
     const productHistory = historyData.productIds;
     const products = [];
     for (let i=0; i<productHistory.length; i++){
-        const product = await ProductsModel.findById(productHistory[i]);
+        const product = {
+            data: await ProductsModel.findById(productHistory[i].Id),
+            count: productHistory[i].count
+        }
         products.push(product);
     }
     return res.json(products);
